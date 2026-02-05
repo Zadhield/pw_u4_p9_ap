@@ -1,7 +1,8 @@
 import axios from "axios";
+import { obtenerTokenFachada } from "./Cliente";
 
 const URL = "http://localhost:8081/matricula/api/v1.0/estudiantes"
-
+const TOKEN= await obtenerTokenFachada();
 const consultarTodos = async () => {
 	const TOKEN = await obtenerTokenFachada();
 	const data = axios.get(`${URL}`, {
