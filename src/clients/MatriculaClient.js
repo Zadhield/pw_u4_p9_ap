@@ -1,17 +1,33 @@
 import axios from "axios";
 
+const URL = "http://localhost:8081/matricula/api/v1.0/estudiantes"
+
 const consultarTodos = async () => {
-	const data = axios.get('http://localhost:8081/matricula/api/v1.0/estudiantes').then(r => r.data);
+	const TOKEN = await obtenerTokenFachada();
+	const data = axios.get(`${URL}`, {
+		headers: {
+			Authorization: `Bearer ${TOKEN}`
+		}
+	}).then(r => r.data);
 	return data;
 }
 
 const consultarPorId = async (id) => {
-	const data = axios.get(`http://localhost:8081/matricula/api/v1.0/estudiantes/${id}`).then(r => r.data);
+	const TOKEN = await obtenerTokenFachada();
+	const data = axios.get(`${URL}/${id}`, {
+		headers: {
+			Authorization: `Bearer ${TOKEN}`
+		}
+	}).then(r => r.data);
 	return data;
 }
 
 const guardar = async (body) => {
-	axios.post(`http://localhost:8081/matricula/api/v1.0/estudiantes`, body).then(r => r.data);
+	axios.post(`${URL}`, body, {
+		headers: {
+			Authorization: `Bearer ${TOKEN}`
+		}
+	}).then(r => r.data);
 	/*
 	const objeto= {
 	nombre:'ANGELO',
@@ -20,21 +36,33 @@ const guardar = async (body) => {
 }
 
 const actualizar = async (id, body) => {
-   
-    const response = await axios.put(`http://localhost:8081/matricula/api/v1.0/estudiantes/${id}`, body);
-    return response.data;
+	const TOKEN = await obtenerTokenFachada();
+	axios.put(`${URL}/${id}`, body, {
+		headers: {
+			Authorization: `Bearer ${TOKEN}`
+		}
+	}).then(r => r.data);
+	return response.data;
 }
 
 const actualizarParcial = async (id, body) => {
-    
-    const response = await axios.patch(`http://localhost:8081/matricula/api/v1.0/estudiantes/${id}`, body);
-    return response.data;
+
+	const TOKEN = await obtenerTokenFachada();
+	axios.patch(`${URL}/${id}`, body, {
+		headers: {
+			Authorization: `Bearer ${TOKEN}`
+		}
+	}).then(r => r.data); return response.data;
 }
 
 const borrar = async (id) => {
-	axios.delete(`http://localhost:8081/matricula/api/v1.0/estudiantes/${id}`).then(r => r.data);
+	const TOKEN = await obtenerTokenFachada();
+	axios.delete(`${URL}/${id}`, {
+		headers: {
+			Authorization: `Bearer ${TOKEN}`
+		}
+	}).then(r => r.data);
 }
-
 
 export const consultarTodosFachada = async () => {
 	return await consultarTodos();
