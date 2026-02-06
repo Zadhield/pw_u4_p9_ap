@@ -13,35 +13,60 @@ const routes = [
     name: 'home',
     component: HomeView
   },
-   {
+  {
     path: '/actulizarParcial',
     name: 'actulizarParcial',
-    component: ActualizarParcialView
+    component: ActualizarParcialView,
+    meta: {
+      requiereAutorizacion: true,
+      esPublica: false
+    }
+
   },
-   {
+  {
     path: '/Actualizar',
     name: 'Actualizar',
-    component: ActualizarView
+    component: ActualizarView,
+    meta: {
+			requiereAutorizacion: true,
+			esPublica: false
+		}
   },
-   {
+  {
     path: '/borrar',
     name: 'borrar',
-    component: BorrarView
+    component: BorrarView,
+    meta: {
+			requiereAutorizacion: true,
+			esPublica: false
+		}
   },
-   {
+  {
     path: '/guardar',
     name: 'guardar',
-    component: GuardarView
+    component: GuardarView,
+    meta: {
+			requiereAutorizacion: true,
+			esPublica: false
+		}
   },
-   {
+  {
     path: '/consultarId',
     name: 'consultarId',
-    component: ConsultarIdView
+    component: ConsultarIdView,
+    meta: {
+			requiereAutorizacion: false,
+			esPublica: false
+		}
   },
-   {
+  {
     path: '/consultarTodos',
     name: 'consultarTodos',
-    component: ConsultarTodosView
+    component: ConsultarTodosView,
+    meta: {
+			requiereAutorizacion: false,
+			esPublica: false
+		}
   },
   {
     path: '/about',
@@ -58,4 +83,13 @@ const router = createRouter({
   routes
 })
 
+
+  router.beforeEach((to,from,next)=>{
+    if(to.meta.requiereAutorizacion){
+      console.log("Redirigiendo al Login")
+    }else{
+      console.log("Pase Libre")
+      next();
+    }
+  })
 export default router
